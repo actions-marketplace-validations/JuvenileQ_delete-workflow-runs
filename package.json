@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mattraks/delete-workflow-runs.git"
+    "url": "git+https://github.com/JuvenileQ/delete-workflow-runs.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Mattraks/delete-workflow-runs/issues"
+    "url": "https://github.com/JuvenileQ/delete-workflow-runs/issues"
   },
-  "homepage": "https://github.com/Mattraks/delete-workflow-runs#readme",
+  "homepage": "https://github.com/JuvenileQ/delete-workflow-runs#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@octokit/rest": "^19.0.11"
