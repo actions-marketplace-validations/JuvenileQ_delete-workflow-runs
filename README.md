@@ -32,8 +32,8 @@ The number of days that is used to compare with the retention days of each workf
 ### 4. `keep_minimum_runs`
 #### Required: YES
 #### Default: 6
-The minimum runs to keep for each workflow.
-
+Number of **workflow runs** to be retained per **workflow**.
+ 
 ### 5. `delete_workflow_pattern`
 #### Required: NO
 #### Default: 'all'

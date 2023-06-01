@@ -83,25 +83,26 @@ async function run() {
                     core.debug(`  Added to del list '${workflow.name}' workflow run ${run.id}`);
                     del_runs.push(run);
                 } else {
+                    Skip_runs.push(run);
                     console.log(`👻 Skipped '${workflow.name}' workflow run ${run.id}: created at ${run.created_at}`);
                 }
             }
             core.debug(`Delete list for '${workflow.name}' is ${del_runs.length} items`);
-            const arr_length = del_runs.length - keep_minimum_runs;
-            if (arr_length > 0) {
+            // const arr_length = del_runs.length - keep_minimum_runs;
+            if (keep_minimum_runs >= 0) {
                 del_runs = del_runs.sort((a, b) => {
                     return a.id - b.id;
                 });
-                if (keep_minimum_runs !== 0) {
-                    Skip_runs = del_runs.slice(-keep_minimum_runs);
-                    console.log('----------- Skip_runs：', Skip_runs.length);
-                    del_runs = del_runs.slice(0, -keep_minimum_runs);
-                    console.log('----------- del_runs：', del_runs.length);
 
-                    for (const Skipped of Skip_runs) {
-                        console.log(`👻 Skipped '${workflow.name}' workflow run ${Skipped.id}: created at ${Skipped.created_at}`);
-                    }
+                Skip_runs = del_runs.slice(0, keep_minimum_runs);
+                console.log('----------- Skip_runs：', Skip_runs.length);
+                del_runs = Skip_runs.slice(keep_minimum_runs);
+                console.log('----------- del_runs：', del_runs.length);
+
+                for (const Skipped of Skip_runs) {
+                    console.log(`👻 Skipped '${workflow.name}' workflow run ${Skipped.id}: created at ${Skipped.created_at}`);
                 }
+
                 core.debug(`Deleting ${del_runs.length} runs for '${workflow.name}' workflow`);
                 for (const del of del_runs) {
                     core.debug(`Deleting '${workflow.name}' workflow run ${del.id}`);
@@ -117,10 +118,9 @@ async function run() {
                         repo: repo_name,
                         run_id: del.id
                     });
-
                     console.log(`🚀 Delete run ${del.id} of '${workflow.name}' workflow`);
                 }
-                console.log(`✅ ${arr_length} runs of '${workflow.name}' workflow deleted.`);
+                console.log(`✅ ${Skip_runs.length} runs of '${workflow.name}' workflow deleted.`);
             }
         }
     } catch (error) {

@@ -20,12 +20,12 @@ inputs:
 
   retain_days:
     description: 'The number of days.'
-    required: true
+    required: false
     default: 30
 
   keep_minimum_runs:
     description: 'The minimum runs to keep for each workflow.'
-    required: true
+    required: false
     default: 6
 
   delete_workflow_pattern:
