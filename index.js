@@ -89,11 +89,11 @@ async function run() {
             core.debug(`Delete list for '${workflow.name}' is ${del_runs.length} items`);
             // const arr_length = del_runs.length - keep_minimum_runs;
             if (keep_minimum_runs >= 0) {
-                del_runs = del_runs.sort((a, b) => {
+                skip_runs = skip_runs.sort((a, b) => {
                     return a.id - b.id;
                 });
 
-                del_runs = skip_runs.slice(keep_minimum_runs);
+                del_runs.push(...skip_runs.slice(keep_minimum_runs));
                 skip_runs = skip_runs.slice(0, keep_minimum_runs);
                 console.log('----------- skip_runs：', skip_runs.length);
                 console.log('----------- del_runs：', del_runs.length);
