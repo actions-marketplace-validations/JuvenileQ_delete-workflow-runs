@@ -19,6 +19,11 @@ async function run() {
         }
         const repo_owner = splitRepository[0];
         const repo_name = splitRepository[1];
+        console.log('----------- keep_minimum_runs：', keep_minimum_runs);
+
+        console.log('----------- repo_owner：', repo_owner);
+        console.log('----------- repo_name：', repo_name);
+
         const {Octokit} = require("@octokit/rest");
         const octokit = new Octokit({auth: token, baseUrl: url});
         let workflows = await octokit
@@ -26,6 +31,8 @@ async function run() {
                 owner: repo_owner,
                 repo: repo_name,
             });
+
+        console.log('----------- workflows：', workflows);
 
         if (delete_workflow_pattern && delete_workflow_pattern.toLowerCase() !== "all") {
             console.log(`💬 workflows containing '${delete_workflow_pattern}' will be targeted`);
@@ -86,7 +93,10 @@ async function run() {
                 });
                 if (keep_minimum_runs !== 0) {
                     Skip_runs = del_runs.slice(-keep_minimum_runs);
+                    console.log('----------- Skip_runs：', Skip_runs.length);
                     del_runs = del_runs.slice(0, -keep_minimum_runs);
+                    console.log('----------- del_runs：', del_runs.length);
+
                     for (const Skipped of Skip_runs) {
                         console.log(`👻 Skipped '${workflow.name}' workflow run ${Skipped.id}: created at ${Skipped.created_at}`);
                     }
