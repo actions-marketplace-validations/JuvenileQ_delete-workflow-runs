@@ -25,12 +25,12 @@ The token used to authenticate.
 The name of the repository where the workflow runs are on.
 
 ### 3. `retain_days`
-#### Required: YES
+#### Required: NO
 #### Default: 30
 The number of days that is used to compare with the retention days of each workflow.
 
 ### 4. `keep_minimum_runs`
-#### Required: YES
+#### Required: NO
 #### Default: 6
 Number of **workflow runs** to be retained per **workflow**.
  

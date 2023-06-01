@@ -27,12 +27,12 @@
 **workflow runs**所在的仓库名称。
 
 ### 3. `retain_days`
-#### 必须: YES
+#### 必须: NO
 #### 默认: 30
 用于与每个 **workflow** 的保留天数进行比较的天数。
 
 ### 4. `keep_minimum_runs`
-#### 必须: YES
+#### 必须: NO
 #### 默认: 6
 每个 **workflow** 要保留的 **workflow runs** 数量。
 
