@@ -55,7 +55,7 @@ async function run() {
         for (const workflow of workflows) {
             core.debug(`Workflow: ${workflow.name} ${workflow.id} ${workflow.state}`);
             let del_runs = [];
-            let Skip_runs = [];
+            let skip_runs = [];
             // Execute the API "List workflow runs for a repository", see 'https://octokit.github.io/rest.js/v18#actions-list-workflow-runs-for-repo'
             const runs = await octokit
                 .paginate("GET /repos/:owner/:repo/actions/workflows/:workflow_id/runs", {
@@ -83,7 +83,7 @@ async function run() {
                     core.debug(`  Added to del list '${workflow.name}' workflow run ${run.id}`);
                     del_runs.push(run);
                 } else {
-                    Skip_runs.push(run);
+                    skip_runs.push(run);
                     console.log(`👻 Skipped '${workflow.name}' workflow run ${run.id}: created at ${run.created_at}`);
                 }
             }
@@ -94,12 +94,12 @@ async function run() {
                     return a.id - b.id;
                 });
 
-                Skip_runs = del_runs.slice(0, keep_minimum_runs);
-                console.log('----------- Skip_runs：', Skip_runs.length);
-                del_runs = Skip_runs.slice(keep_minimum_runs);
+                del_runs = skip_runs.slice(keep_minimum_runs);
+                skip_runs = del_runs.slice(0, keep_minimum_runs);
+                console.log('----------- skip_runs：', skip_runs.length);
                 console.log('----------- del_runs：', del_runs.length);
 
-                for (const Skipped of Skip_runs) {
+                for (const Skipped of skip_runs) {
                     console.log(`👻 Skipped '${workflow.name}' workflow run ${Skipped.id}: created at ${Skipped.created_at}`);
                 }
 
@@ -120,7 +120,7 @@ async function run() {
                     });
                     console.log(`🚀 Delete run ${del.id} of '${workflow.name}' workflow`);
                 }
-                console.log(`✅ ${Skip_runs.length} runs of '${workflow.name}' workflow deleted.`);
+                console.log(`✅ ${skip_runs.length} runs of '${workflow.name}' workflow deleted.`);
             }
         }
     } catch (error) {
