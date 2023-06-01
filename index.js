@@ -63,6 +63,7 @@ async function run() {
                     repo: repo_name,
                     workflow_id: workflow.id
                 });
+            console.log('----------- runs：', runs.length);
             for (const run of runs) {
                 core.debug(`Run: '${workflow.name}' workflow run ${run.id} (status=${run.status})`)
                 if (run.status !== "completed") {
