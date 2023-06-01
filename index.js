@@ -84,7 +84,6 @@ async function run() {
                     del_runs.push(run);
                 } else {
                     skip_runs.push(run);
-                    console.log(`👻 Skipped '${workflow.name}' workflow run ${run.id}: created at ${run.created_at}`);
                 }
             }
             core.debug(`Delete list for '${workflow.name}' is ${del_runs.length} items`);
@@ -95,7 +94,7 @@ async function run() {
                 });
 
                 del_runs = skip_runs.slice(keep_minimum_runs);
-                skip_runs = del_runs.slice(0, keep_minimum_runs);
+                skip_runs = skip_runs.slice(0, keep_minimum_runs);
                 console.log('----------- skip_runs：', skip_runs.length);
                 console.log('----------- del_runs：', del_runs.length);
 
